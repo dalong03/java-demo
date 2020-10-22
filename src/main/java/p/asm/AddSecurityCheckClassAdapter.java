@@ -22,7 +22,7 @@ class AddSecurityCheckClassAdapter extends ClassAdapter {
 			// 对于 "operation" 方法
 			if (name.equals("operation")) {
 				// 使用自定义 MethodVisitor，实际改写方法内容
-				wrappedMv = new AddSecurityCheckMethodAdapter(mv);
+//				wrappedMv = new AddSecurityCheckMethodAdapter(mv);
 			}
 		}
 		return wrappedMv;

@@ -9,7 +9,7 @@ public class Generator {
 		ClassReader cr = new ClassReader("p.asm.Account");
 		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 		ClassAdapter classAdapter = new AddSecurityCheckClassAdapter(cw);
-		cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
+//		cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
 		byte[] data = cw.toByteArray();
 		File file = new File(System.getProperty("user.dir") + "/target/classes/" + "p/asm/Account.class");
 		FileOutputStream fout = new FileOutputStream(file);
