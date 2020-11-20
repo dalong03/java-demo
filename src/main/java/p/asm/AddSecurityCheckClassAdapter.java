@@ -1,8 +1,8 @@
 package p.asm;
 
-import org.objectweb.asm.ClassAdapter;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodVisitor;
+import com.sun.xml.internal.ws.org.objectweb.asm.ClassAdapter;
+import com.sun.xml.internal.ws.org.objectweb.asm.ClassVisitor;
+import com.sun.xml.internal.ws.org.objectweb.asm.MethodVisitor;
 
 class AddSecurityCheckClassAdapter extends ClassAdapter {
 
@@ -22,7 +22,7 @@ class AddSecurityCheckClassAdapter extends ClassAdapter {
 			// 对于 "operation" 方法
 			if (name.equals("operation")) {
 				// 使用自定义 MethodVisitor，实际改写方法内容
-//				wrappedMv = new AddSecurityCheckMethodAdapter(mv);
+				wrappedMv = new AddSecurityCheckMethodAdapter(mv);
 			}
 		}
 		return wrappedMv;

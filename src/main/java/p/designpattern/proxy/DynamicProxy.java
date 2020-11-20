@@ -1,5 +1,6 @@
 package p.designpattern.proxy;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -8,7 +9,8 @@ import p.designpattern.Animal;
 import p.designpattern.Cat;
 
 public class DynamicProxy {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		System.setProperty("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
 		Animal animal = new Cat();
 		InvocationHandler hander = new InvocationHandler1(animal);
 		Animal proxy = (Animal) Proxy.newProxyInstance(Cat.class.getClassLoader(), Cat.class.getInterfaces(), hander);

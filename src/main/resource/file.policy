@@ -1,0 +1,6 @@
+ // \\p\\security\\privilege
+ grant codeBase "file:C:\\Users\\Administrator\\eclipse-workspace\\java-demo\\target\\classes\\p\\security\\privilege"
+ { 
+  permission java.io.FilePermission 
+    "D:\\tmp\\*", "write"; 
+ };

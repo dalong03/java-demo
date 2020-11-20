@@ -44,8 +44,9 @@ public class ServerSocketDemo {
 				while (sc.hasNext()) {
 					String line = sc.nextLine();
 					System.out.println(line);
-					pw.write(line + "\n");
 				}
+				pw.write("copy it");
+				pw.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
