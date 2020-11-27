@@ -1,5 +1,6 @@
-package p.socket;
+package p.net.socket;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,11 +31,12 @@ public class SocketDemo {
 
 		@Override
 		public void run() {
-			try (InputStream input = socket.getInputStream(); Scanner sc = new Scanner(input);) {
-				while (sc.hasNext()) {
-					String line = sc.nextLine();
-					System.out.println(line);
+			try (InputStream input = socket.getInputStream(); DataInputStream dis = new DataInputStream(input)) {
+				char c;
+				while ((c = dis.readChar()) != '!') {
+					System.out.print(String.valueOf(c));
 				}
+				System.out.println();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
