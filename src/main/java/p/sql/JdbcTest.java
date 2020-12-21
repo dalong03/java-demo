@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class JdbcTest {
 	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
@@ -17,9 +18,15 @@ public class JdbcTest {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection c = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
 			String sql = "select * from t1 where id = ?";
-			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setInt(1, 1);
-			ResultSet set = ps.executeQuery();
+			PreparedStatement sta = c.prepareStatement(sql);
+			sta.setInt(1, 1);
+			ResultSet set = sta.executeQuery();
+			
+//			Statement sta = c.createStatement();
+//			sta.execute("select * from t1 where id = 1");
+//			ResultSet set = sta.getResultSet();
+			
+			
 			if (set.next()) {
 				String name = set.getString(2);
 				System.out.println(name);

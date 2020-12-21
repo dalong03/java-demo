@@ -1,16 +1,16 @@
-package p.net.socket;
+package p.sql;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class ServerSocketDemo {
+public class MySqlServerDemo {
 
 	public static void main(String[] args) {
-		try (ServerSocket ss = new ServerSocket(8189);) {
+		try (ServerSocket ss = new ServerSocket(3307);) {
 			System.out.println("server start");
 
 			Executor pool = Executors.newFixedThreadPool(2);
@@ -34,10 +34,11 @@ public class ServerSocketDemo {
 
 		@Override
 		public void run() {
-
-			try (OutputStream os = socket.getOutputStream();) {
-				os.write("welcome".getBytes());
-				os.flush();
+			try (InputStream input = socket.getInputStream();) {
+				byte[] bys = new byte[2048];
+				input.read(bys);
+				String content = new String(bys);
+				System.out.println(content);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {

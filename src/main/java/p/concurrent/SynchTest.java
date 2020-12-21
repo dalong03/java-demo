@@ -36,7 +36,7 @@ public class SynchTest {
 			notifyAll();
 		}
 
-		public double getTotalBalance() {
+		public synchronized double getTotalBalance() {
 			double sum = 0;
 			for (double d : accounts)
 				sum += d;

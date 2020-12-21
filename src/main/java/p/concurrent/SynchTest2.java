@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class SynchTest2 {
-	private static final int NACOUNT = 100;
+	private static final int NACOUNT = 2;
 	private static final double INIT_BALANCE = 1000;
 
 	public static void main(String[] args) {
@@ -17,14 +17,16 @@ public class SynchTest2 {
 	}
 
 	static class Bank {
-		private Lock lock = new ReentrantLock();
-		private Condition con = lock.newCondition();
+		private Lock lock;
+		private Condition con;
 		private double[] accounts;
 
 		public Bank(int n, double b) {
 			accounts = new double[n];
 			for (int i = 0; i < n; i++)
 				accounts[i] = b;
+			lock = new ReentrantLock();
+			con = lock.newCondition();
 		}
 
 		public void transfer(int from, int to, double amount) throws InterruptedException {

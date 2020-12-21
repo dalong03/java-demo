@@ -66,6 +66,13 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.47</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -83,7 +90,8 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					<compilerArgument>-verbose -bootclasspath ${jave.home}\jre\lib\rt.jar</compilerArgument>
+					<compilerArgument>-verbose -bootclasspath
+						${jave.home}\jre\lib\rt.jar</compilerArgument>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,6 +1,5 @@
 package p.net.socket;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,7 +15,7 @@ public class SocketDemo {
 			socket.connect(new InetSocketAddress("localhost", 8189));
 			System.out.println("connect to server successfully");
 			new Thread(new ReadRunnable(socket)).start();
-			new Thread(new WriteRunnable(socket)).start();
+//			new Thread(new WriteRunnable(socket)).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -31,12 +30,13 @@ public class SocketDemo {
 
 		@Override
 		public void run() {
-			try (InputStream input = socket.getInputStream(); DataInputStream dis = new DataInputStream(input)) {
-				char c;
-				while ((c = dis.readChar()) != '!') {
-					System.out.print(String.valueOf(c));
-				}
-				System.out.println();
+
+			try (InputStream is = socket.getInputStream();) {
+				byte[] bys = new byte[1024];
+				int avi = is.available();
+				System.out.println(avi);
+				is.read(bys);
+				System.out.println(new String(bys));
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
@@ -51,7 +51,7 @@ public class SocketDemo {
 
 	}
 
-	private static class WriteRunnable implements Runnable {
+	static class WriteRunnable implements Runnable {
 		private Socket socket;
 
 		public WriteRunnable(Socket socket) {
