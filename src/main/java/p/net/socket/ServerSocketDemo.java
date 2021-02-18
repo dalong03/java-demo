@@ -19,8 +19,8 @@ public class ServerSocketDemo {
 			while (true) {
 				Socket socket = ss.accept();
 				System.out.println(socket.getRemoteSocketAddress() + " accept socket");
-				pool.execute(new EchoRunnable(socket));
-				pool.execute(new EchoRunnable2(socket));
+				pool.execute(new ReadRunnable(socket));
+//				pool.execute(new WriteRunnable(socket));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -28,10 +28,10 @@ public class ServerSocketDemo {
 
 	}
 
-	private static class EchoRunnable implements Runnable {
+	static class WriteRunnable implements Runnable {
 		private Socket socket;
 
-		public EchoRunnable(Socket socket) {
+		public WriteRunnable(Socket socket) {
 			this.socket = socket;
 		}
 
@@ -56,10 +56,10 @@ public class ServerSocketDemo {
 
 	}
 
-	private static class EchoRunnable2 implements Runnable {
+	static class ReadRunnable implements Runnable {
 		private Socket socket;
 
-		public EchoRunnable2(Socket socket) {
+		public ReadRunnable(Socket socket) {
 			this.socket = socket;
 		}
 
@@ -68,13 +68,15 @@ public class ServerSocketDemo {
 
 			try (InputStream is = socket.getInputStream(); Scanner sc = new Scanner(is);) {
 				while (sc.hasNextLine())
-					sc.nextLine();
+					System.out.println(sc.nextLine());
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
 				try {
-					socket.close();
-					System.out.println(socket.getRemoteSocketAddress() + " socket closed");
+					if(socket != null) {
+						socket.close();
+						System.out.println(socket.getRemoteSocketAddress() + " socket closed");
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

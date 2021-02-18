@@ -12,7 +12,7 @@ public class SocketDemo {
 	public static void main(String[] args) {
 		Socket socket = new Socket();
 		try {
-			socket.connect(new InetSocketAddress("localhost", 8189));
+			socket.connect(new InetSocketAddress("localhost", 8090));
 			System.out.println("connect to server successfully");
 			new Thread(new ReadRunnable(socket)).start();
 //			new Thread(new WriteRunnable(socket)).start();
@@ -41,7 +41,9 @@ public class SocketDemo {
 				e.printStackTrace();
 			} finally {
 				try {
-					socket.close();
+					if (socket != null) {
+						socket.close();
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
