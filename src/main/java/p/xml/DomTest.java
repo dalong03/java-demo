@@ -19,7 +19,7 @@ public class DomTest {
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document document = db.parse("entity/applicationContext.xml");
+			Document document = db.parse("entity/books.xml");
 			document.normalize();
 			Element root = document.getDocumentElement();
 

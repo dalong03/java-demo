@@ -1,10 +1,5 @@
 package p;
 
 public class Demo {
-    private int num = 1;
-
-    public int add() {
-        num = num + 2;
-        return num;
-    }
+	static final byte[][][] a = new byte[10][1000][1000];
 }

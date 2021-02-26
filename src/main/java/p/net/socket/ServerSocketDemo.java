@@ -9,11 +9,15 @@ import java.util.Scanner;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import p.concurrent.DeadLockTest;
+
 public class ServerSocketDemo {
 
 	public static void main(String[] args) {
 		try (ServerSocket ss = new ServerSocket(8189);) {
 			System.out.println("server start");
+			
+//			DeadLockTest.main(args);
 
 			Executor pool = Executors.newFixedThreadPool(3);
 			while (true) {
