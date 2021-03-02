@@ -3,6 +3,8 @@ package p.ref;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -10,59 +12,64 @@ public class ReferenceTest {
 
 	@Test
 	public void testStrongRef() {
-		Object o = new Object();
-		System.out.println(o);
-		System.gc();
-		System.out.println(o);
+		A a = new A();
+		System.out.println(a);
+		a = null;
+		System.out.println("a");
 	}
 
 	@Test
 	public void testSoftRef() {
-		SoftReference<Object> ref = new SoftReference<>(new Object());
-		System.out.println(ref);
-		System.out.println(ref.get());
-		System.gc();
-		System.out.println(ref);
-		System.out.println(ref.get());
-
+		List<SoftReference<Object>> list = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			SoftReference<Object> ref = new SoftReference<>(new A());
+			list.add(ref);
+			System.out.println(ref);
+			Object o = ref.get();
+			System.out.println(o);
+		}
 	}
-	
+
 	@Test
 	public void testSoftRef2() {
 		ReferenceQueue<Object> qu = new ReferenceQueue<>();
-		SoftReference<Object> ref = new SoftReference<>(new Object(), qu);
-		System.out.println(ref);
-		System.out.println(ref.get());
-		System.out.println(qu.poll());
-		System.gc();
-		System.out.println(ref);
-		System.out.println(ref.get());
-		System.out.println(qu.poll());
-		
+		List<SoftReference<Object>> list = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			SoftReference<Object> ref = new SoftReference<>(new A(), qu);
+			list.add(ref);
+			System.out.println(ref);
+			Object o = ref.get();
+			System.out.println(o);
+		}
 	}
 
 	@Test
 	public void testWeakRef() {
-		WeakReference<Object> ref = new WeakReference<>(new Object());
-		System.out.println(ref);
-		System.out.println(ref.get());
-		System.gc();
-		System.out.println(ref);
-		System.out.println(ref.get());
+		List<WeakReference<Object>> list = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			WeakReference<Object> ref = new WeakReference<>(new A());
+			list.add(ref);
+			System.out.println(ref);
+			Object o = ref.get();
+			System.out.println(o);
+		}
 	}
-	
+
 	@Test
 	public void testWeakRef2() {
 		ReferenceQueue<Object> qu = new ReferenceQueue<>();
-		WeakReference<Object> ref = new WeakReference<>(new Object(), qu);
-		System.out.println(ref);
-		System.out.println(ref.get());
-		System.out.println(qu.poll());
-		System.gc();
-		System.out.println(ref);
-		System.out.println(ref.get());
-		System.out.println(qu.poll());
-		
+		List<WeakReference<Object>> list = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			WeakReference<Object> ref = new WeakReference<>(new A(), qu);
+			list.add(ref);
+			System.out.println(ref);
+			Object o = ref.get();
+			System.out.println(o);
+		}
+	}
+
+	static class A {
+		byte[] bys = new byte[10 * 1024 * 1024];
 	}
 
 }
