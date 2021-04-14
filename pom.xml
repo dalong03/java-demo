@@ -110,9 +110,19 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					<compilerArgument>-verbose -bootclasspath
-						${jave.home}\jre\lib\rt.jar</compilerArgument>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
