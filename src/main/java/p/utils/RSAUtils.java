@@ -1,20 +1,29 @@
 package p.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.Base64Utils;
-
-import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.*;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.crypto.Cipher;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.Base64Utils;
+
+import com.alibaba.fastjson.JSONObject;
 
 public class RSAUtils {
 	
@@ -398,9 +407,15 @@ public class RSAUtils {
     }
 
     public static void main(String[] args) throws Exception {
-    	String cont = "hello0000000000000000000000000000000000000000000000000000000111111111111111111111111111111111111111111111111111111111111111111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+    	JSONObject m = new JSONObject();
+    	m.put("openid", "170797d05138f3cf775d311e8d41c283ec841989");
+    	m.put("sig", "170797d05138f3cf775d311e8d41c283ec841989");
+    	String cont = m.toString();
     	String cipher = mutiEncryptByPubKey(cont);
-    	String src = mutiDecryptByPriKey(cipher);
+    	System.out.println(cipher);
+    	
+    	
+    	String src = mutiDecryptByPubKey("YBC1wIHkyPGQhjDTJm68Dhoq3GOBeCNLo4LEXN+r3rfz5w9z+FB+sijWNK+h+GzmIV9wXwJFCSJjt0WKlx34MurlflnN7sFi1DXTROy0Fw+/CXF8i5OM3Z/D7g+V9mTWsFoUi34G5DDvvMHrDX1wsQlihfT9VJqrt23KYgCXTlw=Dbh/jlsTNRGB8kSlUWMj+EebwqRbM29qb9msvB+xdID9OjOvgCv7pTPmV+9LbRws5HqrJ/u01QKPaIGusaGfIlQ2fSWcThhZGZyBYpjDZd+ACPkvBF9O/FR2dl04HICvyrQVBinLRDTwgVipjEN0i19RFS259FxacRDHqjZmCF0=");
     	System.out.println(src);
     	
     }

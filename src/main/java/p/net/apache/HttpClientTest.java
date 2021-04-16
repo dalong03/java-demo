@@ -37,7 +37,7 @@ public class HttpClientTest {
 		// 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
 		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 		// 创建Get请求
-		HttpGet httpGet = new HttpGet("http://localhost:8888/licensingservice/default");
+		HttpGet httpGet = new HttpGet("http://localhost:8090/t1/1");
 
 		// 响应模型
 		CloseableHttpResponse response = null;
