@@ -5,26 +5,21 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import p.concurrent.DeadLockTest;
 
 public class ServerSocketDemo {
 
 	public static void main(String[] args) {
-		try (ServerSocket ss = new ServerSocket(8189);) {
+		try (ServerSocket ss = new ServerSocket(8080, 1);) {
 			System.out.println("server start");
-			
-//			DeadLockTest.main(args);
 
 			Executor pool = Executors.newFixedThreadPool(3);
 			while (true) {
 				Socket socket = ss.accept();
-				System.out.println(socket.getRemoteSocketAddress() + " accept socket");
-				pool.execute(new ReadRunnable(socket));
-//				pool.execute(new WriteRunnable(socket));
+				System.out.println("accept socket" + socket.getRemoteSocketAddress());
+				pool.execute(new ReadTask(socket));
+//				pool.execute(new WriteTask(socket));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -32,10 +27,10 @@ public class ServerSocketDemo {
 
 	}
 
-	static class WriteRunnable implements Runnable {
+	static class WriteTask implements Runnable {
 		private Socket socket;
 
-		public WriteRunnable(Socket socket) {
+		public WriteTask(Socket socket) {
 			this.socket = socket;
 		}
 
@@ -60,24 +55,28 @@ public class ServerSocketDemo {
 
 	}
 
-	static class ReadRunnable implements Runnable {
+	static class ReadTask implements Runnable {
 		private Socket socket;
 
-		public ReadRunnable(Socket socket) {
+		public ReadTask(Socket socket) {
 			this.socket = socket;
 		}
 
 		@Override
 		public void run() {
 
-			try (InputStream is = socket.getInputStream(); Scanner sc = new Scanner(is);) {
-				while (sc.hasNextLine())
-					System.out.println(sc.nextLine());
+			try (InputStream is = socket.getInputStream();) {
+				byte[] byts = new byte[1024];
+				int count = is.available();
+				if (count > 0) {
+					is.read(byts);
+					System.out.println(new String(byts));
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			} finally {
 				try {
-					if(socket != null) {
+					if (socket != null) {
 						socket.close();
 						System.out.println(socket.getRemoteSocketAddress() + " socket closed");
 					}
